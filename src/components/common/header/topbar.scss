@@ -1,0 +1,14 @@
+@use '../../../styles/variables' as v;
+
+.topbar {
+    background-color: v.$color2;
+    color: v.$color3;
+
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
