@@ -1,3 +1,11 @@
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+} from "react-icons/fa";
+
 export const config = {
   project: {
     name: "Lion Academy",
@@ -22,6 +30,14 @@ export const config = {
       linkedin: "https://linkedin.com",
       youtube: "https://youtube.com",
     },
+    socialIcons: {
+      twitter: FaTwitter,
+      facebook: FaFacebook,
+      instagram: FaInstagram,
+      linkedin: FaLinkedin,
+      youtube: FaYoutube,
+    },
+
   },
   api: {
     baseUrl: "https://mycampusmates.com/app",
