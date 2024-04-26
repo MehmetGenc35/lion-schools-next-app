@@ -1,19 +1,19 @@
 @use './variables' as v;
 
 @mixin transform($val){
-    @each $vendor in $vendors {
+    @each $vendor in v.$vendors {
         #{$vendor}transform: $val;
     }
 }
 
 @mixin transition($val){
-    @each $vendor in $vendors {
+    @each $vendor in v.$vendors {
         #{$vendor}transition: $val;
     }
 }
 
 @mixin border-radius($val){
-    @each $vendor in $vendors{
+    @each $vendor in v.$vendors{
         #{$vendor}border-radius: $val;
     }
 }
