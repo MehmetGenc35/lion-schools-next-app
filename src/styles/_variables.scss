@@ -5,6 +5,15 @@ $color2:rgb(112, 112, 112);
 $color3:rgb(247, 247, 247);
 $color1-op-50:rgba(89, 56, 255,0.5);
 $color2-op-50: rgba(62, 62, 62,0.5);
+$color2-op-10: rgba($color2, 0.1);
+$color2-op-5: rgba($color2, 0.05);
+$vendors: (
+    "",
+    "-webkit-",
+    "-moz-",
+    "-ms-",
+    "-o-"
+);
 
 
 /*BOOTSTRAP*/

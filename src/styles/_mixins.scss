@@ -1,0 +1,50 @@
+@use './variables' as v;
+
+@mixin transform($val){
+    @each $vendor in $vendors {
+        #{$vendor}transform: $val;
+    }
+}
+
+@mixin transition($val){
+    @each $vendor in $vendors {
+        #{$vendor}transition: $val;
+    }
+}
+
+@mixin border-radius($val){
+    @each $vendor in $vendors{
+        #{$vendor}border-radius: $val;
+    }
+}
+
+@mixin shadow($type,$val){
+    #{$type}-shadow:$val;
+}
+
+@mixin reset-list(){
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+@mixin flex($fd:row,$jc:space-between,$ai:stretch,$gap:0,$fw:wrap){
+    display: flex;
+    flex-direction: $fd;
+    justify-content: $jc;
+    align-items: $ai;
+    gap: $gap;
+    flex-wrap: $fw;
+}
+
+@mixin fligran($color, $opacity: 0.5) {
+    content: ""; //mecburi
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: $color;
+    opacity: $opacity;
+
+}
