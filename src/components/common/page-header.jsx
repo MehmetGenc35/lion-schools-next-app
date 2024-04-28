@@ -1,4 +1,4 @@
-import React from 'react'
+import './page-header.scss'
 
 const PageHeader = ({children}) => {
   return (
