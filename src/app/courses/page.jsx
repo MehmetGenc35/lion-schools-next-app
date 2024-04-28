@@ -2,13 +2,13 @@ import PageHeader from '@/components/common/page-header'
 import Spacer from '@/components/common/spacer'
 import React from 'react'
 
-const AboutPage = () => {
+const CoursesPage = () => {
   return (
     <>
-    <PageHeader>About Us</PageHeader>
+    <PageHeader>Courses</PageHeader>
     <Spacer height={70}/>
     </>
   )
 }
 
-export default AboutPage
+export default CoursesPage
