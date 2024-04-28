@@ -1,0 +1,21 @@
+@use '../../styles/mixins' as m;
+
+.upcoming-events {
+
+    .swiper-slide {
+        height: auto;
+    }
+
+    .section-title {
+        margin: 0;
+    }
+
+    .title {
+        @include m.flex($ai: center);
+        margin-bottom: 50px;
+
+        svg {
+            font-size: 2rem;
+        }
+    }
+}

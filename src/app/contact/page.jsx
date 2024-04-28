@@ -7,6 +7,7 @@ const ContactPage = () => {
     <>
     <PageHeader>Contact</PageHeader>
     <Spacer height={70}/>
+    
     </>
   )
 }

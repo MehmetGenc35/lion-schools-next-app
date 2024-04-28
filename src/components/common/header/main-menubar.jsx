@@ -7,7 +7,11 @@ import ButtonCallNow from "./button-call-now";
 
 const MainMenubar = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary mb-3">
+    <Navbar
+      expand="lg"
+      className="bg-body-tertiary mb-3"
+      collapseOnSelect={true}
+    >
       <Container>
         <Logo />
         <Navbar.Toggle aria-controls="main-menu" />
