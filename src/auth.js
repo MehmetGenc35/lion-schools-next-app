@@ -1,21 +1,19 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { login } from "./services/auth-service";
-
 const config = {
   providers: [
     Credentials({
       async authorize(credentials) {
         const res = await login(credentials);
         const data = await res.json();
-
         if (!res.ok) return null;
-
         const payload = {
           user: { ...data },
           accessToken: data.token.split(" ")[1],
         };
         delete payload.user.token;
+
         return payload;
       },
     }),
@@ -24,28 +22,47 @@ const config = {
     authorized({ auth, request }) {
       const { pathname } = request.nextUrl;
 
+      
       const isLoggedIn = !!auth?.user?.role;
 
+      
       const isInLoginPage = pathname.startsWith("/login");
 
-      const isInDashboardPage = pathname.startsWith("/dashboard");
+      
+      const isInDashboardPages = pathname.startsWith("/dashboard");
 
+      
       if (isLoggedIn) {
-        if (isInDashboardPage) {
+        if (isInDashboardPages) {
+          
           return true;
         } else if (isInLoginPage) {
+         
           return Response.redirect(new URL("/dashboard", request.nextUrl));
         }
-      } else if (isInDashboardPage) {
+      } else if (isInDashboardPages) {
+        
         return false;
       }
 
-      return true;
+      return true; 
+    },
+
+    
+    async jwt({ token, user }) {
+      return { ...token, ...user }; 
+    },
+  
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      session.user = token.user;
+      return session; 
     },
   },
   pages: {
     signIn: "/login",
   },
 };
-
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
+
+

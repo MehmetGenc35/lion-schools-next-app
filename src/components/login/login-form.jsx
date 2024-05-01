@@ -25,7 +25,7 @@ const LoginForm = () => {
               <h4>Please enter your username and password</h4>
 
               {state.message ? (
-                <Alert variant="danger">{state.message}</Alert>
+                <Alert variant="danger">{state?.message}</Alert>
               ) : null}
 
               <Form action={dispatch} noValidate>
@@ -34,7 +34,8 @@ const LoginForm = () => {
                   <Form.Control
                     type="text"
                     name="username"
-                    isInvalid={!!state.errors?.username}
+                    defaultValue="root"
+                    isInvalid={!!state?.errors?.username}
                   />
                   <Form.Control.Feedback type="invalid">
                     {state.errors?.username}
@@ -45,7 +46,8 @@ const LoginForm = () => {
 
                   <PasswordInput
                     name="password"
-                    error={state.errors?.password}
+                    defaultValue="12345aA."
+                    error={state?.errors?.password}
                   />
                 </Form.Group>
                 <Button variant="primary" type="submit">

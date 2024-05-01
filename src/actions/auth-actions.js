@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { signIn } from "@/auth";
 import {
@@ -10,23 +10,20 @@ import {
 import { AuthSchema } from "@/helpers/schemas/auth-schema";
 import { AuthError } from "next-auth";
 
+export const loginAction = async (prewState, formData) => {
+  const fields = convertFormDataToJSON(formData);
 
-export const loginAction= async(prewState,formData)=>{
+  try {
+    AuthSchema.validateSync(fields, { abortEarly: false });
 
-    const fields= convertFormDataToJSON(formData);
-
-    try {
-        AuthSchema.validateSync(fields, { abortEarly: false });
-
-        await signIn("credentials",fields);
-    } catch (err) {
-        if(err instanceof YupValidationError){
-            return transformYupErrors(err.inner);
-        }
-        else if(err instanceof AuthError){
-            return response(false, "Invalid credentials");
-        }
-        throw err;
+    //validasyondan geçerse sign in olması lazım
+    await signIn("credentials", fields);
+  } catch (err) {
+    if (err instanceof YupValidationError) {
+      return transformYupErrors(err.inner);
+    } else if (err instanceof AuthError) {
+      return response(false, "Invalid credentials");
     }
-
-}
+    throw err;
+  }
+};
