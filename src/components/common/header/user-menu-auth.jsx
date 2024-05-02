@@ -5,7 +5,6 @@ import { TfiUser } from "react-icons/tfi";
 import userMenuData from "@/helpers/data/user-menu.json";
 import Link from "next/link";
 import LogoutButton from "./logout-button";
-
 const UserMenuAuth = ({ session }) => {
   const [show, setShow] = useState(false);
 
@@ -14,15 +13,16 @@ const UserMenuAuth = ({ session }) => {
 
   const { name, role } = session.user;
   const userMenu = userMenuData[role.toLowerCase()];
+
   return (
     <>
-      <Button className="btn btn-secondary " onClick={handleShow}>
+      <Button className="btn btn-secondary" onClick={handleShow}>
         <TfiUser /> {name}
       </Button>
-
       <Offcanvas
         show={show}
         onHide={handleClose}
+        collapseOnSelect={true}
         data-bs-theme="dark"
       >
         <Offcanvas.Header closeButton>
@@ -43,5 +43,9 @@ const UserMenuAuth = ({ session }) => {
     </>
   );
 };
-
 export default UserMenuAuth;
+
+//!burada session olan user a auth(); kullanarak ulaşamayız çümkü burası user client
+//!bunun iki seçeneği var ya session provider ile uygulamayı sarmallamak
+//!yada bir üstten props olarak session objesine ulaşmak
+//!bize yakın olduğu için burada props kullanmayı tercih ettik
