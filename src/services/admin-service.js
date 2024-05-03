@@ -12,3 +12,10 @@ export const getAllAdminsByPage = async (
     headers: await getAuthHeader(),
   });
 };
+
+export const deleteAdmin = async (id) => {
+  return fetch(`${API_URL}/admin/delete/${id}`, {
+    method: "DELETE",
+    headers: await getAuthHeader(),
+  })
+}

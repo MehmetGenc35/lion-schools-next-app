@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Container } from 'react-bootstrap'
 import { TfiTrash } from 'react-icons/tfi'
+import AdminToolbar from './admin-toolbar'
 
 const AdminList = ({data}) => {
 
@@ -10,7 +11,7 @@ const AdminList = ({data}) => {
 
 
   const handleToolbar = (row) => {
-    return <button className='btn text-danger'><TfiTrash/></button>
+    return <AdminToolbar row={row} /> 
   }
 
 
