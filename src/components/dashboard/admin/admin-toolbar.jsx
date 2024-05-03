@@ -1,5 +1,5 @@
 "use client";
-import { deleteAdminAction } from "@/actions/admin-action";
+import { deleteAdminAction } from "@/actions/admin-actions";
 import { swAlert, swConfirm } from "@/helpers/swal";
 import React from "react";
 import { TfiTrash } from "react-icons/tfi";
