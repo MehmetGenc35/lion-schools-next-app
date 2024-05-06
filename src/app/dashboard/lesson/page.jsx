@@ -1,6 +1,6 @@
 import PageHeader from '@/components/common/page-header'
 import Spacer from '@/components/common/spacer'
-import LessonList from '@/components/dashboard/lesson/term-list'
+import LessonList from '@/components/dashboard/lesson/lesson-list'
 import { getAllLessonsByPage } from '@/services/lesson-service'
 import React from 'react'
 
