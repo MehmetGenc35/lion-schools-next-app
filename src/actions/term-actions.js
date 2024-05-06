@@ -18,14 +18,16 @@ export const createTermAction = async (prevState, formData) => {
     if (!res.ok) {
       return response(false, data?.message);
     }
+
+    revalidatePath("/dashboard/education-term");
+    return response(true, "Term was created");
   } catch (err) {
     if (err instanceof YupValidationError) {
       return transformYupErrors(err.inner);
     }
     throw err;
   }
-  //revalidatePath("/dashboard/admin");
-  return response(true, "Term was created");
+
 };
 export const deleteTermAction = async (id) => {
   if (!id) throw new Error("Id is missing");
@@ -33,12 +35,14 @@ export const deleteTermAction = async (id) => {
     const res = await deleteTerm(id);
     if (!res.ok) {
       // API daki donus degeri json degil string oldugu icin res.text() ile karsilamak zorunda kaldik
-      const data = await res.text();
-      throw new Error(data);
+      const data = await res.json();
+      throw new Error(data.message);
     }
+
+      revalidatePath("/dashboard/education-term");
+      return response(true, "Term was deleted");
   } catch (err) {
     return response(false, err.message);
   }
-  revalidatePath("/dashboard/term");
-  return response(true, "Term was deleted");
+
 };

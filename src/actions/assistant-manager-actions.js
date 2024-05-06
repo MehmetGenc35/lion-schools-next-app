@@ -18,14 +18,16 @@ export const createAssistantManagerActions=async(prewState,formData)=>{
     if (!res.ok) {
       return response(false, data?.message);
     }
+
+      revalidatePath("/dashboard/assistant-manager");
+      return response(true, "Assistant manager was created");
   } catch (err) {
     if (err instanceof YupValidationError) {
       return transformYupErrors(err.inner);
     }
     throw err;
   }
-  //revalidatePath("/dashboard/assistant-manager");
-  return response(true, "Assistant manager was created");
+
 };
 
 export const updateAssistantManagerAction = async (prewState, formData) => {
@@ -53,13 +55,14 @@ export const deleteAssitantManagerAction = async (id) => {
   try {
     const res = await deleteAssistantManager(id);
     if (!res.ok) {
-      // API daki donus degeri json degil string oldugu icin res.text() ile karsilamak zorunda kaldik
-      const data = await res.text();
-      throw new Error(data);
+      const data = await res.json();
+      throw new Error(data.message);
     }
+
+      revalidatePath("/dashboard/assistant-manager");
+      return response(true, "Assistant manager was deleted");
   } catch (err) {
     return response(false, err.message);
   }
-  revalidatePath("/dashboard/assistant-manager");
-  return response(true, "Assistant manager was deleted");
+
 };

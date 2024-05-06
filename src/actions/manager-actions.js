@@ -7,45 +7,48 @@ const { createManager, updateManager } = require("@/services/manager-service");
 export const createManagerActions=async(prewState,formData)=>{
 
     try {
-        const fields= convertFormDataToJSON(formData);
-        
-        ManagerSchema.validateSync(fields, { abortEarly: false });
+      const fields = convertFormDataToJSON(formData);
 
-        const res= await createManager(fields);
+      ManagerSchema.validateSync(fields, { abortEarly: false });
 
-        const data= res.json();
+      const res = await createManager(fields);
 
-        if(!res.ok){
-            return response(false,data?.message);
-        }
+      const data = res.json();
+
+      if (!res.ok) {
+        return response(false, data?.message);
+      }
+
+      revalidatePath("/dashboard/manager");
+      return response(true, "Manager was created");
     } catch (err) {
         if(err instanceof YupValidationError){
             return transformYupErrors(err.inner);
         }
         throw err;
     }
-  //revalidatePath("/dashboard/admin");
-  return response(true, "Manager was created");
+
 };
 
 export const updateManagerAction = async (prewState, formData) => {
     if(!formData.id) throw new Error("Id is missing");
     try {
-        const fields= convertFormDataToJSON(formData);
-        ManagerSchema.validateSync(fields, { abortEarly: false });
-        const res= await updateManager(fields);
-        const data= await res.json();
-        if (!res.ok) {
-            return response(false, data?.message);
-        }
+      const fields = convertFormDataToJSON(formData);
+      ManagerSchema.validateSync(fields, { abortEarly: false });
+      const res = await updateManager(fields);
+      const data = await res.json();
+      if (!res.ok) {
+        return response(false, data?.message);
+      }
+      revalidatePath("/dashboard/manager");
+      return response(true, "Manager was updated");
     } catch (err) {
     if (err instanceof YupValidationError) {
       return transformYupErrors(err.inner);
     }
     throw err;
   }
-  //revalidatePath("/dashboard/admin");
-  return response(true, "Manager was updated");
+
 };
 
 export const deleteManagerAction = async (id) => {
@@ -53,13 +56,13 @@ export const deleteManagerAction = async (id) => {
   try {
     const res = await deleteManager(id);
     if (!res.ok) {
-      // API daki donus degeri json degil string oldugu icin res.text() ile karsilamak zorunda kaldik
-      const data = await res.text();
-      throw new Error(data);
+      const data = await res.json();
+      throw new Error(data.message);
     }
+      revalidatePath("/dashboard/manager");
+      return response(true, "Manager was deleted");
   } catch (err) {
     return response(false, err.message);
   }
-  revalidatePath("/dashboard/manager");
-  return response(true, "Manager was deleted");
+
 };

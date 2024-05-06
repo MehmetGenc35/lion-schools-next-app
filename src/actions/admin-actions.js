@@ -19,14 +19,16 @@ export const createAdminAction = async (prevState, formData) => {
     if (!res.ok) {
       return response(false, data?.message);
     }
+
+    revalidatePath("/dashboard/admin");
+    return response(true, "Admin was created");
   } catch (err) {
     if (err instanceof YupValidationError) {
       return transformYupErrors(err.inner);
     }
     throw err;
   }
-  //revalidatePath("/dashboard/admin");
-  return response(true, "Admin was created");
+
 };
 
 export const deleteAdminAction = async (id) => {
@@ -39,9 +41,11 @@ export const deleteAdminAction = async (id) => {
       const data = await res.text();
       throw new Error(data);
     }
+
+      revalidatePath("/dashboard/admin");
+      return response(true, "Admin was deleted");
   } catch (err) {
     return response(false, err.message);
   }
-  revalidatePath("/dashboard/admin");
-  return response(true, "Admin was deleted");
+
 };
