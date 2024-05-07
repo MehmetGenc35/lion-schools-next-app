@@ -11,7 +11,7 @@ const ProgramPage = async({searchParams}) => {
     const dataAllPrograms= (await getAllProgramsByPage(page)).json();
     const dataUnassignedPrograms= (await getAllUnAssignedPrograms()).json();
 
-    const [allPrograms,unassignedPrograms]= Promise.all([dataAllPrograms,dataUnassignedPrograms])
+    const [allPrograms,unassignedPrograms]=await Promise.all([dataAllPrograms,dataUnassignedPrograms])
   return (
     <>
     <PageHeader>Program</PageHeader>

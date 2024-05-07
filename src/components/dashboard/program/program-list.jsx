@@ -5,6 +5,7 @@ import React from 'react'
 import ProgramToolbar from './program-toolbar';
 import { config } from '@/helpers/config';
 import { formatTimeLT } from '@/helpers/date-time';
+import { Container } from 'react-bootstrap';
 
 const ProgramList = ({data}) => {
     const{content,totalPages,number,size}=data;
@@ -18,7 +19,7 @@ const ProgramList = ({data}) => {
     }
 
     const handleTime = (row) => {
-        return `${formatTimeLT(row.startTime)} - ${formatTimeLT(row.endTime)}`;
+        return `${formatTimeLT(row.startTime)} - ${formatTimeLT(row.stopTime)}`;
     }
 
     const handleLessonNames = (row) => {

@@ -1,7 +1,9 @@
 "use client";
 import { deleteAssitantManagerAction } from "@/actions/assistant-manager-actions";
 import { swAlert, swConfirm } from "@/helpers/swal";
+import Link from "next/link";
 import React from "react";
+import { Button } from "react-bootstrap";
 import { TfiPencil, TfiTrash } from "react-icons/tfi";
 
 const AssistantManagerToolbar = ({ row }) => {
@@ -18,12 +20,12 @@ const AssistantManagerToolbar = ({ row }) => {
 
   return (
     <>
-      <a className="btn text-info" href={`/dashboard/assistant-manager/${row.userId}`}>
+      <Link className="btn text-info" href={`/dashboard/assistant-manager/${row.userId}`}>
         <TfiPencil />
-      </a>
-      <button className="btn text-danger" onClick={handleDelete}>
+      </Link>
+      <Button variant="link" onClick={handleDelete}>
         <TfiTrash />
-      </button>
+      </Button>
     </>
   );
 };

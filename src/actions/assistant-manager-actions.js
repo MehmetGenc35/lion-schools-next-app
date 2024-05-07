@@ -40,14 +40,15 @@ export const updateAssistantManagerAction = async (prewState, formData) => {
     if (!res.ok) {
       return response(false, data?.message);
     }
+      revalidatePath("/dashboard/assistant-manager");
+      return response(true, "Assistant manager was updated");
   } catch (err) {
     if (err instanceof YupValidationError) {
       return transformYupErrors(err.inner);
     }
     throw err;
   }
-  //revalidatePath("/dashboard/assistant-manager");
-  return response(true, "Assistant manager was updated");
+
 };
 
 export const deleteAssitantManagerAction = async (id) => {

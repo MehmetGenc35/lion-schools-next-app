@@ -2,6 +2,7 @@
 import { deleteLessonAction } from "@/actions/lesson-actions";
 import { swAlert, swConfirm } from "@/helpers/swal";
 import React from "react";
+import { Button } from "react-bootstrap";
 import { TfiTrash } from "react-icons/tfi";
 const LessonToolbar = ({ row }) => {
   const handleDelete = async () => {
@@ -15,9 +16,9 @@ const LessonToolbar = ({ row }) => {
     }
   };
   return (
-    <button className="btn text-danger" onClick={handleDelete}>
+    <Button variant="link" onClick={handleDelete}>
       <TfiTrash />
-    </button>
+    </Button>
   );
 };
 export default LessonToolbar;

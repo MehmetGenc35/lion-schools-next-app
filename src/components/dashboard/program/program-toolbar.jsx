@@ -24,4 +24,4 @@ const ProgramToolbar = ({ row }) => {
   );
 };
 
-export default ProgramToolbar;
+export default ProgramToolbar
