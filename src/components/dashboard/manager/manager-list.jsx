@@ -1,3 +1,4 @@
+"use client"
 import DataTable, { Column } from '@/components/common/form-fields/data-table'
 import Link from 'next/link'
 import React from 'react'
@@ -16,28 +17,27 @@ const ManagerList = ({data}) => {
 
   return (
     <Container>
-        <Link href='/dashboard/manager/new' className='btn btn-primary mb-3'>
-            New
-        </Link>
+      <Link href="/dashboard/manager/new" className="btn btn-primary mb-3">
+        New
+      </Link>
 
-        <DataTable
-        title='Manager List'
+      <DataTable
+        name="managerList"
+        title="Manager List"
         dataSource={content}
-        dataKey='id'
+        dataKey="id"
         totalPages={totalPages}
         currentPage={number}
         pageSize={size}
-        >
-          <Column index={true}>#</Column>
-          <Column dataField='name'>First Name</Column>
-          <Column dataField='surname'>Last Name</Column>
-          <Column dataField='username'>Username</Column>
-          <Column template={handleToolbar}>Username</Column>
-        </DataTable>
-
-        
+      >
+        <Column index={true}>#</Column>
+        <Column dataField="name">First Name</Column>
+        <Column dataField="surname">Last Name</Column>
+        <Column dataField="username">Username</Column>
+        <Column template={handleToolbar}>Username</Column>
+      </DataTable>
     </Container>
-  )
+  );
 }
 
 export default ManagerList

@@ -1,3 +1,4 @@
+"use client";
 import DataTable, { Column } from "@/components/common/form-fields/data-table";
 import Link from "next/link";
 import React from "react";
@@ -24,11 +25,15 @@ const TermList = ({ data }) => {
 
   return (
     <Container>
-      <Link href="/dashboard/education-term/new" className="btn btn-primary mb-3">
+      <Link
+        href="/dashboard/education-term/new"
+        className="btn btn-primary mb-3"
+      >
         New
       </Link>
 
       <DataTable
+        name="termList"
         title="Term List"
         dataSource={content}
         dataKey="id"

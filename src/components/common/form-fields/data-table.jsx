@@ -1,33 +1,17 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+
 export const Column = ({ children }) => {
   return <th scope="col">{children}</th>;
 };
 
-export const Row = ({ children }) => {
+export const Row = ({ children, selectionMode }) => {
   return <tr>{children}</tr>;
 };
 
 export const Cell = ({ children }) => {
   return <td>{children}</td>;
-};
-
-export const Pagination = ({ totalPages, currentPage }) => {
-  return (
-    <nav aria-label="Navigation" className="d-flex justify-content-center ">
-      <ul className="pagination">
-        <FirstPageButton currentPage={currentPage} />
-
-        <PreviousPageButton currentPage={currentPage} />
-
-        <PageButton totalPages={totalPages} currentPage={currentPage} />
-
-        <NextPageButton totalPages={totalPages} currentPage={currentPage} />
-
-        <LastPageButton totalPages={totalPages} currentPage={currentPage} />
-      </ul>
-    </nav>
-  );
 };
 
 export const FirstPageButton = ({ currentPage }) => {
@@ -83,6 +67,7 @@ export const NextPageButton = ({ currentPage, totalPages }) => {
     </li>
   );
 };
+
 export const LastPageButton = ({ currentPage, totalPages }) => {
   return (
     <li className="page-item">
@@ -98,50 +83,108 @@ export const LastPageButton = ({ currentPage, totalPages }) => {
   );
 };
 
+export const Pagination = ({ totalPages, currentPage }) => {
+  return (
+    <nav aria-label="Navigation" className="d-flex justify-content-center ">
+      <ul className="pagination">
+        <FirstPageButton currentPage={currentPage} />
+        <PreviousPageButton currentPage={currentPage} />
+        <PageButton totalPages={totalPages} currentPage={currentPage} />
+        <NextPageButton totalPages={totalPages} currentPage={currentPage} />
+        <LastPageButton totalPages={totalPages} currentPage={currentPage} />
+      </ul>
+    </nav>
+  );
+};
+
+const selectionModeTypes = ["single", "multiple", "none"];
+
 const DataTable = (props) => {
   const {
+    name,
     title,
     dataSource,
     dataKey,
-    totalPages=0,
-    currentPage=0,
-    pageSize=0,
     children,
+    selectionMode = "none", //single, multiple, none
+    totalPages = 0,
+    currentPage = 0,
+    pageSize = 0,
   } = props;
 
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  if (!name) throw new Error("Missing name for datatable");
+
   if (!dataSource || !Array.isArray(dataSource))
-    throw new Error("dataSource attribute is required");
+    throw new Error("dataSource attribute is required for datatable");
 
-  if (!dataKey) throw new Error("dataKey attribute is required");
+  if (!dataKey) throw new Error("dataKey attribute is required for datatable");
 
-    if (!children) throw new Error("Column is required");
+  if (!children) throw new Error("Column required for datatable");
 
-    const columns = Array.isArray(children) ? [...children] : [children];
+  const columns = Array.isArray(children) ? [...children] : [children];
+
+  if (!selectionModeTypes.includes(selectionMode))
+    throw new Error("Invalid selection mode for datatable");
+
+  if (selectionMode !== "none") {
+    columns.splice(0, 0, <Column selectionMode={selectionMode}></Column>);
+  }
+
+  const handleSelectedItems = (e) => {
+    const val = e.target.value;
+    let arr = [...selectedItems];
+
+    if (!arr.includes(val)) {
+      arr.push(val);
+    } else {
+      arr = arr.filter((item) => item !== val);
+    }
+
+    setSelectedItems(arr);
+  };
+
+  console.log(selectedItems);
 
   return (
     <div className="card">
+      <input type="hidden" name={name} value={JSON.stringify(selectedItems)} />
       <div className="card-body">
         <h3 className="card-title">{title}</h3>
         <div className="table-responsive">
           <table className="table table-striped">
             <thead>
-              <tr>{children}</tr>
+              <tr>{columns}</tr>
             </thead>
             <tbody>
               {dataSource.map((row, rowIndex) => (
-                <Row key={row[dataKey]}>
+                <Row key={row[dataKey]} selectionMode={selectionMode}>
                   {columns.map((cell) => {
-                    const { dataField, index, template } = cell.props;
+                    const { dataField, index, template, selectionMode } =
+                      cell.props;
 
                     let cellData = "";
                     const cellKey = row[dataKey] + dataField + cellData;
 
                     if (index) {
-                      cellData = pageSize * currentPage + (rowIndex + 1);
+                      cellData = pageSize * currentPage + rowIndex + 1;
                     } else if (dataField) {
                       cellData = row[dataField];
                     } else if (template) {
                       cellData = template(row);
+                    } else if (selectionMode !== "none") {
+                      const inputType =
+                        selectionMode === "single" ? "radio" : "checkbox";
+                      cellData = (
+                        <input
+                          type={inputType}
+                          name="rd"
+                          className="form-check-input"
+                          defaultValue={row[dataKey]}
+                          onChange={handleSelectedItems}
+                        />
+                      );
                     }
 
                     return <Cell key={cellKey}>{cellData}</Cell>;
@@ -150,6 +193,7 @@ const DataTable = (props) => {
               ))}
             </tbody>
           </table>
+
           {totalPages > 1 ? (
             <Pagination totalPages={totalPages} currentPage={currentPage} />
           ) : null}
@@ -160,3 +204,27 @@ const DataTable = (props) => {
 };
 
 export default DataTable;
+/*
+  if(index){
+    cellData = rowIndex+1;
+  }
+  else if(dataField){
+    cellData = row[dataField];
+  }
+
+  bu kısım satır numarası olsun dersek kullanılacak index true demek o columndaki hücreler satır numarası için kullanılacak
+  else if kısmındaki column hücreleri db den gelen verilerle ilgili olacak
+
+*/
+
+/*
+        {[...Array(totalPages)].map((_, index) => (
+          <li key={index} className="page-item">
+            <a className="page-link" href="#">
+              {index + 1}
+            </a>
+          </li>
+        ))}
+
+        gelen total page sayısına göre sayfanın altındaki sayfa numaralarını verecek
+*/

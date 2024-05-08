@@ -1,3 +1,4 @@
+"use client";
 import DataTable, { Column } from "@/components/common/form-fields/data-table";
 import Link from "next/link";
 import React from "react";
@@ -12,10 +13,9 @@ const LessonList = ({ data }) => {
     return <LessonToolbar row={row} />;
   };
 
-    const handleCompulsory = (row) => {
-      return row.compulsory ? <TfiCheck /> : <TfiMinus />;
-    };
-
+  const handleCompulsory = (row) => {
+    return row.compulsory ? <TfiCheck /> : <TfiMinus />;
+  };
 
   return (
     <Container>
@@ -24,6 +24,7 @@ const LessonList = ({ data }) => {
       </Link>
 
       <DataTable
+        name="lessonList"
         title="Lesson List"
         dataSource={content}
         dataKey="lessonId"

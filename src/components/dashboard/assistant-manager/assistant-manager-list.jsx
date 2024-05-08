@@ -1,43 +1,43 @@
-import DataTable, { Column } from '@/components/common/form-fields/data-table'
-import Link from 'next/link'
-import React from 'react'
-import { Container } from 'react-bootstrap'
-import AssistantManagerToolbar from './assistant-manager-toolbar';
+"use client";
+import DataTable, { Column } from "@/components/common/form-fields/data-table";
+import Link from "next/link";
+import React from "react";
+import { Container } from "react-bootstrap";
+import AssistantManagerToolbar from "./assistant-manager-toolbar";
 
-const AssistantManagerList = ({data}) => {
-
-  const {content,totalPages,number,size} = data;
-
+const AssistantManagerList = ({ data }) => {
+  const { content, totalPages, number, size } = data;
 
   const handleToolbar = (row) => {
-    return <AssistantManagerToolbar row={row} /> 
-  }
-
+    return <AssistantManagerToolbar row={row} />;
+  };
 
   return (
     <Container>
-        <Link href='/dashboard/assistant-manager/new' className='btn btn-primary mb-3'>
-            New
-        </Link>
+      <Link
+        href="/dashboard/assistant-manager/new"
+        className="btn btn-primary mb-3"
+      >
+        New
+      </Link>
 
-        <DataTable
-        title='Assistant Manager List'
+      <DataTable
+        name="assistantManagerList"
+        title="Assistant Manager List"
         dataSource={content}
-        dataKey='id'
+        dataKey="id"
         totalPages={totalPages}
         currentPage={number}
         pageSize={size}
-        >
-          <Column index={true}>#</Column>
-          <Column dataField='name'>First Name</Column>
-          <Column dataField='surname'>Last Name</Column>
-          <Column dataField='username'>Username</Column>
-          <Column template={handleToolbar}>Username</Column>
-        </DataTable>
-
-        
+      >
+        <Column index={true}>#</Column>
+        <Column dataField="name">First Name</Column>
+        <Column dataField="surname">Last Name</Column>
+        <Column dataField="username">Username</Column>
+        <Column template={handleToolbar}>Username</Column>
+      </DataTable>
     </Container>
-  )
-}
+  );
+};
 
 export default AssistantManagerList;

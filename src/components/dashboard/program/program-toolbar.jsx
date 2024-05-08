@@ -17,6 +17,7 @@ const ProgramToolbar = ({ row }) => {
       swAlert(res.message, "error");
     }
   };
+
   return (
     <Button variant="link" onClick={handleDelete}>
       <TfiTrash />
@@ -24,4 +25,4 @@ const ProgramToolbar = ({ row }) => {
   );
 };
 
-export default ProgramToolbar
+export default ProgramToolbar;

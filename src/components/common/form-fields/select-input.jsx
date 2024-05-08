@@ -5,7 +5,7 @@ const SelectInput = ({ className, options, error, label, ...rest }) => {
     <Form.Group className={className} controlId={rest.name}>
       <Form.Label>{label}</Form.Label>
       <Form.Select aria-label={label} {...rest} isInvalid={!!error}>
-        <option  disabled defaultValue="">
+        <option selected disabled value="">
           Choose
         </option>
         {options.map((item) => (
